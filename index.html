@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Content Unlocker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 25px;
+            text-align: center;
+            border-bottom: 2px solid #ff4d4d;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ff8a00, #da1b60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .content {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .step-container {
+            background: rgba(30, 30, 50, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .step-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .step-number {
+            background: #ff4d4d;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+        
+        .step-title {
+            font-size: 1.8rem;
+            color: #ffcc00;
+        }
+        
+        .websites-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .website-card {
+            background: rgba(20, 20, 40, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .website-card:hover {
+            background: rgba(40, 40, 80, 0.8);
+            transform: scale(1.03);
+        }
+        
+        .website-icon {
+            font-size: 1.8rem;
+            margin-right: 15px;
+            color: #4dabf7;
+        }
+        
+        .website-link {
+            color: #4dabf7;
+            text-decoration: none;
+            font-weight: 500;
+            word-break: break-all;
+        }
+        
+        .website-link:hover {
+            text-decoration: underline;
+        }
+        
+        .status-indicator {
+            margin-left: auto;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ff4d4d;
+        }
+        
+        .visited .status-indicator {
+            background: #0be881;
+        }
+        
+        .whatsapp-message {
+            background: rgba(20, 20, 40, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .message-content {
+            background: #25D366;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 80%;
+            font-size: 1.1rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .unlock-section {
+            text-align: center;
+            padding: 30px;
+            background: rgba(30, 30, 50, 0.6);
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        .unlock-btn {
+            background: linear-gradient(to right, #ff8a00, #da1b60);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.4rem;
+            border-radius: 50px;
+            cursor: not-allowed;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin: 20px 0;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .unlock-btn.active {
+            cursor: pointer;
+            opacity: 1;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 138, 0, 0.7);
+        }
+        
+        .unlock-btn.active:hover {
+            transform: scale(1.08);
+        }
+        
+        .progress-container {
+            background: rgba(255, 255, 255, 0.1);
+            height: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #0be881, #05c46b);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        .progress-text {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        
+        .owner-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .owner-name {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .step-title {
+                font-size: 1.5rem;
+            }
+            
+            .websites-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-lock-open"></i> Premium Content Unlocker</h1>
+            <p class="subtitle">Complete the steps below to unlock exclusive content</p>
+        </header>
+        
+        <div class="content">
+            <div class="step-container">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <h2 class="step-title">Visit Required Websites</h2>
+                </div>
+                <p>Please visit all the websites below to proceed:</p>
+                
+                <div class="websites-list">
+                    <div class="website-card" data-url="https://otieu.com/4/9964203">
+                        <div class="website-icon"><i class="fas fa-globe"></i></div>
+                        <a class="website-link" href="https://otieu.com/4/9964203" target="_blank">otieu.com/4/9964203</a>
+                        <div class="status-indicator"></div>
+                    </div>
+                    
+                    <div class="website-card" data-url="https://otieu.com/4/9964213">
+                        <div class="website-icon"><i class="fas fa-globe"></i></div>
+                        <a class="website-link" href="https://otieu.com/4/9964213" target="_blank">otieu.com/4/9964213</a>
+                        <div class="status-indicator"></div>
+                    </div>
+                    
+                    <div class="website-card" data-url="https://otieu.com/4/9966292">
+                        <div class="website-icon"><i class="fas fa-globe"></i></div>
+                        <a class="website-link" href="https://otieu.com/4/9966292" target="_blank">otieu.com/4/9966292</a>
+                        <div class="status-indicator"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step-container">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <h2 class="step-title">Share on WhatsApp</h2>
+                </div>
+                <p>After visiting the websites, share this message in 3 WhatsApp groups or chats:</p>
+                
+                <div class="whatsapp-message">
+                    <div class="message-content">
+                        Try Now This Method ✅
+                    </div>
+                </div>
+                
+                <button id="shareBtn" class="unlock-btn">
+                    <i class="fab fa-whatsapp"></i> Mark as Shared
+                </button>
+            </div>
+            
+            <div class="unlock-section">
+                <h2>Unlock Exclusive Content</h2>
+                <p>After completing both steps, you can unlock the premium content:</p>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="progress-text" id="progressText">Progress: 0/6 tasks completed</div>
+                
+                <button id="unlockBtn" class="unlock-btn">
+                    <i class="fas fa-unlock-alt"></i> Unlock Premium Content
+                </button>
+                
+                <div class="owner-info">
+                    Owner: <span class="owner-name">Didula Rashmika</span>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2023 Premium Content Unlocker | All rights reserved</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const websiteCards = document.querySelectorAll('.website-card');
+            const shareBtn = document.getElementById('shareBtn');
+            const unlockBtn = document.getElementById('unlockBtn');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            let visitedCount = 0;
+            let sharedCount = 0;
+            const totalTasks = 6; // 3 visits + 3 shares
+            
+            // Update progress bar
+            function updateProgress() {
+                const progress = ((visitedCount + sharedCount) / totalTasks) * 100;
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `Progress: ${visitedCount + sharedCount}/${totalTasks} tasks completed`;
+                
+                if (visitedCount >= 3 && sharedCount >= 3) {
+                    unlockBtn.classList.add('active');
+                    unlockBtn.disabled = false;
+                } else {
+                    unlockBtn.classList.remove('active');
+                    unlockBtn.disabled = true;
+                }
+            }
+            
+            // Handle website visits
+            websiteCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = this.getAttribute('data-url');
+                    
+                    // Open website in new tab
+                    window.open(url, '_blank');
+                    
+                    // Mark as visited after delay (simulating actual visit)
+                    setTimeout(() => {
+                        if (!this.classList.contains('visited')) {
+                            this.classList.add('visited');
+                            visitedCount++;
+                            updateProgress();
+                            
+                            // Show confirmation
+                            const icon = this.querySelector('.website-icon');
+                            icon.innerHTML = '<i class="fas fa-check-circle" style="color:#0be881;"></i>';
+                        }
+                    }, 2000);
+                });
+            });
+            
+            // Handle share button
+            shareBtn.addEventListener('click', function() {
+                // In a real implementation, this would trigger WhatsApp sharing
+                // For demo purposes, we'll just simulate it
+                
+                if (sharedCount < 3) {
+                    sharedCount++;
+                    updateProgress();
+                    
+                    // Visual feedback
+                    this.innerHTML = `<i class="fab fa-whatsapp"></i> Shared (${sharedCount}/3)`;
+                    
+                    if (sharedCount === 3) {
+                        this.innerHTML = '<i class="fas fa-check"></i> All Shares Completed';
+                        this.style.background = 'linear-gradient(to right, #0be881, #05c46b)';
+                    }
+                }
+            });
+            
+            // Handle unlock button
+            unlockBtn.addEventListener('click', function() {
+                if (this.classList.contains('active')) {
+                    // Redirect to unlock URL
+                    window.location.href = 'https://ceyolonlankasmm.shop/';
+                }
+            });
+            
+            // Initialize progress
+            updateProgress();
+        });
+    </script>
+</body>
+  </html>
