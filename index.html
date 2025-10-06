@@ -1,427 +1,414 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Content Unlocker</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
-            color: #fff;
-            min-height: 100vh;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 900px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-        }
-        
-        header {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 25px;
-            text-align: center;
-            border-bottom: 2px solid #ff4d4d;
-        }
-        
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            background: linear-gradient(to right, #ff8a00, #da1b60);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 15px;
-        }
-        
-        .content {
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-        
-        .step-container {
-            background: rgba(30, 30, 50, 0.6);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
-        
-        .step-container:hover {
-            transform: translateY(-5px);
-        }
-        
-        .step-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .step-number {
-            background: #ff4d4d;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-right: 15px;
-        }
-        
-        .step-title {
-            font-size: 1.8rem;
-            color: #ffcc00;
-        }
-        
-        .websites-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .website-card {
-            background: rgba(20, 20, 40, 0.7);
-            border-radius: 10px;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .website-card:hover {
-            background: rgba(40, 40, 80, 0.8);
-            transform: scale(1.03);
-        }
-        
-        .website-icon {
-            font-size: 1.8rem;
-            margin-right: 15px;
-            color: #4dabf7;
-        }
-        
-        .website-link {
-            color: #4dabf7;
-            text-decoration: none;
-            font-weight: 500;
-            word-break: break-all;
-        }
-        
-        .website-link:hover {
-            text-decoration: underline;
-        }
-        
-        .status-indicator {
-            margin-left: auto;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #ff4d4d;
-        }
-        
-        .visited .status-indicator {
-            background: #0be881;
-        }
-        
-        .whatsapp-message {
-            background: rgba(20, 20, 40, 0.7);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            position: relative;
-        }
-        
-        .message-content {
-            background: #25D366;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            max-width: 80%;
-            font-size: 1.1rem;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .unlock-section {
-            text-align: center;
-            padding: 30px;
-            background: rgba(30, 30, 50, 0.6);
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-        
-        .unlock-btn {
-            background: linear-gradient(to right, #ff8a00, #da1b60);
-            color: white;
-            border: none;
-            padding: 18px 40px;
-            font-size: 1.4rem;
-            border-radius: 50px;
-            cursor: not-allowed;
-            opacity: 0.6;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            margin: 20px 0;
-            width: 100%;
-            max-width: 400px;
-        }
-        
-        .unlock-btn.active {
-            cursor: pointer;
-            opacity: 1;
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 138, 0, 0.7);
-        }
-        
-        .unlock-btn.active:hover {
-            transform: scale(1.08);
-        }
-        
-        .progress-container {
-            background: rgba(255, 255, 255, 0.1);
-            height: 20px;
-            border-radius: 10px;
-            margin: 25px 0;
-            overflow: hidden;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(to right, #0be881, #05c46b);
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 10px;
-        }
-        
-        .progress-text {
-            font-size: 1.2rem;
-            margin-top: 10px;
-        }
-        
-        .owner-info {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            text-align: center;
-            font-size: 1.1rem;
-        }
-        
-        .owner-name {
-            color: #ffcc00;
-            font-weight: bold;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.4);
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        @media (max-width: 768px) {
-            .content {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .step-title {
-                font-size: 1.5rem;
-            }
-            
-            .websites-list {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unlock Content — Didula Rashmika</title>
+  <!-- 
+    This is a "Visit & Share to Unlock" landing page.
+    It requires the user to:
+      1. Visit 3 specified websites (tracked via button clicks)
+      2. Share a WhatsApp message 3 times (tracked via button clicks)
+
+    Progress is stored in localStorage using keys:
+      - visit1, visit2, visit3
+      - share1, share2, share3
+
+    Once all six actions are completed, the unlock URL is revealed.
+    The page is fully client-side and does not track or verify actual visits or shares.
+  -->
+  <style>
+    :root {
+      --primary: #28a745;
+      --primary-dark: #218838;
+      --secondary: #f8f9fa;
+      --text: #333;
+      --border: #ddd;
+      --success: #28a745;
+      --disabled: #ccc;
+      --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: #fff;
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    header, main, footer {
+      margin-bottom: 30px;
+    }
+
+    h1, h2 {
+      margin-bottom: 15px;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    .progress-container {
+      margin: 20px 0;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background-color: #eee;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: var(--primary);
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .actions {
+      display: grid;
+      gap: 15px;
+      margin: 25px 0;
+    }
+
+    @media (min-width: 768px) {
+      .actions {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .action-card {
+      background: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 15px;
+      position: relative;
+    }
+
+    .action-card h3 {
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 15px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: var(--primary);
+      color: white;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .btn:hover,
+    .btn:focus {
+      background-color: var(--primary-dark);
+      outline: 2px solid #0b7dda;
+    }
+
+    .btn:disabled {
+      background-color: var(--disabled);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    .btn-success {
+      background-color: var(--success);
+    }
+
+    .checkmark {
+      margin-left: 8px;
+      font-weight: bold;
+    }
+
+    .tooltip {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    .unlock-section {
+      background-color: #e8f5e9;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .unlock-link {
+      font-size: 1.2rem;
+      word-break: break-all;
+      margin: 15px 0;
+      display: block;
+      color: var(--primary);
+    }
+
+    .copy-btn {
+      margin-top: 10px;
+      background-color: #17a2b8;
+    }
+
+    .reset-btn {
+      margin-top: 10px;
+      background-color: #dc3545;
+    }
+
+    footer {
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      padding-top: 15px;
+    }
+
+    .disclaimer {
+      font-size: 0.85rem;
+      color: #888;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-lock-open"></i> Premium Content Unlocker</h1>
-            <p class="subtitle">Complete the steps below to unlock exclusive content</p>
-        </header>
-        
-        <div class="content">
-            <div class="step-container">
-                <div class="step-header">
-                    <div class="step-number">1</div>
-                    <h2 class="step-title">Visit Required Websites</h2>
-                </div>
-                <p>Please visit all the websites below to proceed:</p>
-                
-                <div class="websites-list">
-                    <div class="website-card" data-url="https://otieu.com/4/9964203">
-                        <div class="website-icon"><i class="fas fa-globe"></i></div>
-                        <a class="website-link" href="https://otieu.com/4/9964203" target="_blank">otieu.com/4/9964203</a>
-                        <div class="status-indicator"></div>
-                    </div>
-                    
-                    <div class="website-card" data-url="https://otieu.com/4/9964213">
-                        <div class="website-icon"><i class="fas fa-globe"></i></div>
-                        <a class="website-link" href="https://otieu.com/4/9964213" target="_blank">otieu.com/4/9964213</a>
-                        <div class="status-indicator"></div>
-                    </div>
-                    
-                    <div class="website-card" data-url="https://otieu.com/4/9966292">
-                        <div class="website-icon"><i class="fas fa-globe"></i></div>
-                        <a class="website-link" href="https://otieu.com/4/9966292" target="_blank">otieu.com/4/9966292</a>
-                        <div class="status-indicator"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="step-container">
-                <div class="step-header">
-                    <div class="step-number">2</div>
-                    <h2 class="step-title">Share on WhatsApp</h2>
-                </div>
-                <p>After visiting the websites, share this message in 3 WhatsApp groups or chats:</p>
-                
-                <div class="whatsapp-message">
-                    <div class="message-content">
-                        Try Now This Method ✅
-                    </div>
-                </div>
-                
-                <button id="shareBtn" class="unlock-btn">
-                    <i class="fab fa-whatsapp"></i> Mark as Shared
-                </button>
-            </div>
-            
-            <div class="unlock-section">
-                <h2>Unlock Exclusive Content</h2>
-                <p>After completing both steps, you can unlock the premium content:</p>
-                
-                <div class="progress-container">
-                    <div class="progress-bar" id="progressBar"></div>
-                </div>
-                <div class="progress-text" id="progressText">Progress: 0/6 tasks completed</div>
-                
-                <button id="unlockBtn" class="unlock-btn">
-                    <i class="fas fa-unlock-alt"></i> Unlock Premium Content
-                </button>
-                
-                <div class="owner-info">
-                    Owner: <span class="owner-name">Didula Rashmika</span>
-                </div>
-            </div>
-        </div>
-        
-        <footer>
-            <p>&copy; 2023 Premium Content Unlocker | All rights reserved</p>
-        </footer>
+
+  <header>
+    <h1>Unlock Exclusive Content</h1>
+    <p>Complete the required actions below to reveal the unlock link.</p>
+  </header>
+
+  <main>
+    <div class="progress-container">
+      <p>Progress: <span id="progress-text">0</span>/6 completed</p>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const websiteCards = document.querySelectorAll('.website-card');
-            const shareBtn = document.getElementById('shareBtn');
-            const unlockBtn = document.getElementById('unlockBtn');
-            const progressBar = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
-            
-            let visitedCount = 0;
-            let sharedCount = 0;
-            const totalTasks = 6; // 3 visits + 3 shares
-            
-            // Update progress bar
-            function updateProgress() {
-                const progress = ((visitedCount + sharedCount) / totalTasks) * 100;
-                progressBar.style.width = `${progress}%`;
-                progressText.textContent = `Progress: ${visitedCount + sharedCount}/${totalTasks} tasks completed`;
-                
-                if (visitedCount >= 3 && sharedCount >= 3) {
-                    unlockBtn.classList.add('active');
-                    unlockBtn.disabled = false;
-                } else {
-                    unlockBtn.classList.remove('active');
-                    unlockBtn.disabled = true;
-                }
+    <section class="actions">
+      <!-- Visit Buttons -->
+      <div class="action-card">
+        <h3>Visit Site 1</h3>
+        <button id="visit1" class="btn" data-type="visit" data-id="1">Visit Now</button>
+        <span class="tooltip">Will open in a new tab</span>
+      </div>
+
+      <div class="action-card">
+        <h3>Visit Site 2</h3>
+        <button id="visit2" class="btn" data-type="visit" data-id="2">Visit Now</button>
+        <span class="tooltip">Will open in a new tab</span>
+      </div>
+
+      <div class="action-card">
+        <h3>Visit Site 3</h3>
+        <button id="visit3" class="btn" data-type="visit" data-id="3">Visit Now</button>
+        <span class="tooltip">Will open in a new tab</span>
+      </div>
+
+      <!-- Share Buttons -->
+      <div class="action-card">
+        <h3>Share to WhatsApp 1</h3>
+        <button id="share1" class="btn" data-type="share" data-id="1">Share Now</button>
+        <span class="tooltip">Will open WhatsApp with pre-filled message</span>
+      </div>
+
+      <div class="action-card">
+        <h3>Share to WhatsApp 2</h3>
+        <button id="share2" class="btn" data-type="share" data-id="2">Share Now</button>
+        <span class="tooltip">Will open WhatsApp with pre-filled message</span>
+      </div>
+
+      <div class="action-card">
+        <h3>Share to WhatsApp 3</h3>
+        <button id="share3" class="btn" data-type="share" data-id="3">Share Now</button>
+        <span class="tooltip">Will open WhatsApp with pre-filled message</span>
+      </div>
+    </section>
+
+    <div class="disclaimer">
+      <p><strong>Note:</strong> This page records only button clicks locally in your browser to track progress. It cannot verify content posted inside WhatsApp groups.</p>
+    </div>
+
+    <section id="unlock-section" class="unlock-section" style="display: none;">
+      <h2>Content Unlocked!</h2>
+      <p>Your exclusive content is now available.</p>
+      <a id="unlock-link" class="unlock-link" href="https://ceyolonlankasmm.shop/" target="_blank">https://ceyolonlankasmm.shop/</a>
+      <button id="copy-btn" class="btn copy-btn">Copy Link</button>
+      <button id="open-btn" class="btn">Open Now</button>
+      <button id="reset-btn" class="btn reset-btn">Reset Progress</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>Owner — Didula Rashmika</p>
+  </footer>
+
+  <script>
+    // Constants
+    const visitUrls = [
+      'https://otieu.com/4/9964203',
+      'https://otieu.com/4/9964213',
+      'https://otieu.com/4/9966292'
+    ];
+
+    const shareMessage = 'Try Now This Method ✅';
+    const unlockUrl = 'https://ceyolonlankasmm.shop/';
+
+    // DOM Elements
+    const visitButtons = document.querySelectorAll('[data-type="visit"]');
+    const shareButtons = document.querySelectorAll('[data-type="share"]');
+    const progressText = document.getElementById('progress-text');
+    const progressFill = document.getElementById('progress-fill');
+    const unlockSection = document.getElementById('unlock-section');
+    const unlockLink = document.getElementById('unlock-link');
+    const copyBtn = document.getElementById('copy-btn');
+    const openBtn = document.getElementById('open-btn');
+    const resetBtn = document.getElementById('reset-btn');
+
+    // Load progress from localStorage
+    function loadProgress() {
+      let completed = 0;
+
+      visitButtons.forEach(btn => {
+        const id = btn.dataset.id;
+        if (localStorage.getItem(`visit${id}`) === 'true') {
+          markAsCompleted(btn);
+          completed++;
+        }
+      });
+
+      shareButtons.forEach(btn => {
+        const id = btn.dataset.id;
+        if (localStorage.getItem(`share${id}`) === 'true') {
+          markAsCompleted(btn);
+          completed++;
+        }
+      });
+
+      updateProgress(completed);
+      if (completed === 6) {
+        showUnlockSection();
+      }
+    }
+
+    // Mark button as completed
+    function markAsCompleted(button) {
+      button.disabled = true;
+      button.classList.add('btn-success');
+      button.innerHTML = 'Completed <span class="checkmark">✔</span>';
+    }
+
+    // Update progress bar and text
+    function updateProgress(count) {
+      progressText.textContent = count;
+      progressFill.style.width = `${(count / 6) * 100}%`;
+    }
+
+    // Show unlock section
+    function showUnlockSection() {
+      unlockSection.style.display = 'block';
+    }
+
+    // Handle visit button clicks
+    visitButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const id = button.dataset.id;
+        window.open(visitUrls[id - 1], '_blank');
+        localStorage.setItem(`visit${id}`, 'true');
+        markAsCompleted(button);
+        updateProgress(getCompletedCount());
+        if (getCompletedCount() === 6) {
+          showUnlockSection();
+        }
+      });
+    });
+
+    // Handle share button clicks
+    shareButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const id = button.dataset.id;
+        const shareData = { text: shareMessage };
+
+        if (navigator.share) {
+          navigator.share(shareData).then(() => {
+            localStorage.setItem(`share${id}`, 'true');
+            markAsCompleted(button);
+            updateProgress(getCompletedCount());
+            if (getCompletedCount() === 6) {
+              showUnlockSection();
             }
-            
-            // Handle website visits
-            websiteCards.forEach(card => {
-                card.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const url = this.getAttribute('data-url');
-                    
-                    // Open website in new tab
-                    window.open(url, '_blank');
-                    
-                    // Mark as visited after delay (simulating actual visit)
-                    setTimeout(() => {
-                        if (!this.classList.contains('visited')) {
-                            this.classList.add('visited');
-                            visitedCount++;
-                            updateProgress();
-                            
-                            // Show confirmation
-                            const icon = this.querySelector('.website-icon');
-                            icon.innerHTML = '<i class="fas fa-check-circle" style="color:#0be881;"></i>';
-                        }
-                    }, 2000);
-                });
-            });
-            
-            // Handle share button
-            shareBtn.addEventListener('click', function() {
-                // In a real implementation, this would trigger WhatsApp sharing
-                // For demo purposes, we'll just simulate it
-                
-                if (sharedCount < 3) {
-                    sharedCount++;
-                    updateProgress();
-                    
-                    // Visual feedback
-                    this.innerHTML = `<i class="fab fa-whatsapp"></i> Shared (${sharedCount}/3)`;
-                    
-                    if (sharedCount === 3) {
-                        this.innerHTML = '<i class="fas fa-check"></i> All Shares Completed';
-                        this.style.background = 'linear-gradient(to right, #0be881, #05c46b)';
-                    }
-                }
-            });
-            
-            // Handle unlock button
-            unlockBtn.addEventListener('click', function() {
-                if (this.classList.contains('active')) {
-                    // Redirect to unlock URL
-                    window.location.href = 'https://ceyolonlankasmm.shop/';
-                }
-            });
-            
-            // Initialize progress
-            updateProgress();
-        });
-    </script>
+          }).catch(() => {
+            // Fallback to WhatsApp link if share fails or is cancelled
+            fallbackToWhatsApp();
+          });
+        } else {
+          fallbackToWhatsApp();
+        }
+
+        function fallbackToWhatsApp() {
+          const encodedMessage = encodeURIComponent(shareMessage);
+          window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+          localStorage.setItem(`share${id}`, 'true');
+          markAsCompleted(button);
+          updateProgress(getCompletedCount());
+          if (getCompletedCount() === 6) {
+            showUnlockSection();
+          }
+        }
+      });
+    });
+
+    // Get total completed actions
+    function getCompletedCount() {
+      let count = 0;
+      for (let i = 1; i <= 3; i++) {
+        if (localStorage.getItem(`visit${i}`) === 'true') count++;
+        if (localStorage.getItem(`share${i}`) === 'true') count++;
+      }
+      return count;
+    }
+
+    // Copy link to clipboard
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(unlockUrl).then(() => {
+        alert('Link copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    });
+
+    // Open unlock URL in new tab
+    openBtn.addEventListener('click', () => {
+      window.open(unlockUrl, '_blank');
+    });
+
+    // Reset progress
+    resetBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to reset your progress?')) {
+        for (let i = 1; i <= 3; i++) {
+          localStorage.removeItem(`visit${i}`);
+          localStorage.removeItem(`share${i}`);
+        }
+        location.reload();
+      }
+    });
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', loadProgress);
+  </script>
 </body>
-  </html>
+</html>
